@@ -59,8 +59,18 @@ class XLoginAdapter extends BaseHttpClient {
         };
     }
 
-    async startProfile(profileId) {
-        const response = await this.get(`/api/v3/profiles/start/${profileId}`);
+    async startProfile(profileId, options = {}) {
+        const { scale, width, height, x, y, isArrange } = options;
+        const params = new URLSearchParams();
+        if (typeof scale === 'number') params.append('scale', String(scale));
+        if (width != null) params.append('width', String(width));
+        if (height != null) params.append('height', String(height));
+        if (x != null) params.append('x', String(x));
+        if (y != null) params.append('y', String(y));
+        if (isArrange != null) params.append('isArrange', String(isArrange));
+
+        const query = params.toString() ? `?${params.toString()}` : '';
+        const response = await this.get(`/api/v3/profiles/start/${profileId}${query}`);
         const data = JSON.parse(response);
 
         return {

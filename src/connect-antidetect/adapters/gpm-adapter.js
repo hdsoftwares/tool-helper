@@ -42,7 +42,6 @@ class GPMLoginAdapter extends BaseHttpClient {
             note: profile.note
         }));
     }
-
     async createProfile(params) {
         const requestBody = {
             group_id: params.folderId,
@@ -50,10 +49,8 @@ class GPMLoginAdapter extends BaseHttpClient {
             proxy: params.proxy || '',
             note: params.note || ''
         };
-
         const response = await this.post('/api/v3/profiles/create', requestBody);
         const data = JSON.parse(response);
-
         return {
             id: data.data.id,
             name: data.data.name,
@@ -65,14 +62,14 @@ class GPMLoginAdapter extends BaseHttpClient {
     }
 
     async startProfile(profileId, options = {}) {
-        const winScale = options.winScale || 0.5;
-        const winSize = options.winSize || '700,900';
-
+        const { scale, width, height, x, y } = options;
+        const win_scale = (typeof scale === 'number') ? scale : (options.win_scale || 0.5); // 0..1.0
+        const win_size = options.win_size || ((width != null && height != null) ? `${width},${height}` : '700,900'); // width,height
+        const win_pos = options.win_pos || ((x != null && y != null) ? `${x},${y}` : '300,300'); // x,y
         const response = await this.post(
-            `/api/v3/profiles/start/${profileId}?win_scale=${winScale}&win_size=${winSize}`
+            `/api/v3/profiles/start/${profileId}?win_scale=${win_scale}&win_size=${win_size}&win_pos=${win_pos}`
         );
         const data = JSON.parse(response);
-
         return {
             debugPort: this._extractPort(data.data.remote_debugging_address),
             success: data.success

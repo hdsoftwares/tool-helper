@@ -22,6 +22,8 @@ const { SelectorHelper, XPathBuilder } = require('./src/xpath/xpath-helper');
 // Telegram
 const TelegramBot = require('./src/telegram/telegram-bot');
 
+// Tracking HTTP
+const TrackingHttp = require('./src/trackingNetwork/trackingHttp');
 // Antidetect Browser Manager
 const {
     ConnectAntidetectHelper,
@@ -41,6 +43,9 @@ module.exports = {
     // Antidetect Browser Helper
     ConnectAntidetectHelper,
     PlatformType,
+
+    // Tracking HTTP
+    TrackingHttp,
 
     // ==================== ORGANIZED BY CATEGORY ====================
 
@@ -64,6 +69,12 @@ module.exports = {
         isPlatformSupported: (type) => ConnectAntidetectHelper.isPlatformSupported(type)
     },
 
+    trackingHttp: {
+        TrackingHttp,
+        // Convenience function
+        createTrackingHttp: (config) => new TrackingHttp(config)
+    },
+
     // ==================== METADATA ====================
 
     version: '1.0.0',
@@ -74,6 +85,7 @@ module.exports = {
             xpath: ['SelectorHelper', 'XPathBuilder'],
             telegram: ['TelegramBot'],
             antidetect: ['ConnectAntidetectHelper', 'PlatformType'],
+            trackingHttp: ['TrackingHttp'],
             browser: [], // TODO
             threading: [], // TODO
             utils: [] // TODO
@@ -92,7 +104,8 @@ module.exports = {
                 'Antidetect Browser Manager (XLogin, GPM, GoLogin)',
                 'Worker Pool (Multi-threading)',
                 'Action Executor',
-                'Wait & Retry Helpers'
+                'Wait & Retry Helpers',
+                'Tracking HTTP'
             ],
             author: 'HD Software',
             license: 'PRIVATE'
