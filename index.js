@@ -16,10 +16,10 @@
 // ==================== CORE MODULES ====================
 
 // XPath & Selector
+const TelegramBot = require('./src/telegram/telegram-bot');
 const { SelectorHelper, XPathBuilder } = require('./src/xpath/xpath-helper');
 
 // Telegram
-const TelegramBot = require('./src/telegram/telegram-bot');
 module.exports = {
     // XPath & Selector Tools
     SelectorHelper,
