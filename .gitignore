@@ -1,0 +1,28 @@
+# Thư mục node_modules
+node_modules/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Output build (nếu có)
+dist/
+build/
+
+# Môi trường
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
