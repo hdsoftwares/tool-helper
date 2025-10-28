@@ -11,33 +11,31 @@ const FormData = require('form-data');
 
 class TelegramBot {
     constructor(botToken, options = {}) {
-        if (!botToken) {
-            throw new Error('Bot token is required');
+            if (!botToken) {
+                throw new Error('Bot token is required');
+            }
+
+            this.botToken = botToken;
+            this.baseUrl = `https://api.telegram.org/bot${botToken}`;
+
+            this.config = {
+                timeout: options.timeout || 30000,
+                retryAttempts: options.retryAttempts || 3,
+                retryDelay: options.retryDelay || 1000,
+                defaultChatId: options.defaultChatId || null,
+                defaultParseMode: options.defaultParseMode || 'HTML', // HTML, Markdown, MarkdownV2
+                disableNotification: options.disableNotification || false,
+                ...options
+            };
+
+            this.lastMessageId = null;
+            this.lastError = null;
         }
-
-        this.botToken = botToken;
-        this.baseUrl = `https://api.telegram.org/bot${botToken}`;
-
-        this.config = {
-            timeout: options.timeout || 30000,
-            retryAttempts: options.retryAttempts || 3,
-            retryDelay: options.retryDelay || 1000,
-            defaultChatId: options.defaultChatId || null,
-            defaultParseMode: options.defaultParseMode || 'HTML', // HTML, Markdown, MarkdownV2
-            disableNotification: options.disableNotification || false,
-            ...options
-        };
-
-        this.lastMessageId = null;
-        this.lastError = null;
-    }
-
-    // ==================== CORE API METHODS ====================
-
-    /**
-     * Make API request to Telegram
-     * @private
-     */
+        // ==================== CORE API METHODS ====================
+        /**
+         * Make API request to Telegram
+         * @private
+         */
     async _request(method, data = {}, isFormData = false) {
         const url = `${this.baseUrl}/${method}`;
 
