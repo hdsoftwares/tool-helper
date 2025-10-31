@@ -24,6 +24,7 @@ const TelegramBot = require('./src/telegram/telegram-bot');
 
 // Tracking HTTP
 const TrackingHttp = require('./src/trackingNetwork/trackingHttp');
+const CaptchaHelper = require('./src/captcha-helper/captcha-helper');
 // Antidetect Browser Manager
 const {
     ConnectAntidetectHelper,
@@ -46,6 +47,9 @@ module.exports = {
 
     // Tracking HTTP
     TrackingHttp,
+
+    // Captcha Helper
+    CaptchaHelper,
 
     // ==================== ORGANIZED BY CATEGORY ====================
 
@@ -75,6 +79,12 @@ module.exports = {
         createTrackingHttp: (config) => new TrackingHttp(config)
     },
 
+    captcha: {
+        CaptchaHelper,
+        // Convenience function
+        createCaptchaHelper: (config) => new CaptchaHelper(config)
+    },
+
     // ==================== METADATA ====================
 
     version: '1.0.0',
@@ -86,6 +96,7 @@ module.exports = {
             telegram: ['TelegramBot'],
             antidetect: ['ConnectAntidetectHelper', 'PlatformType'],
             trackingHttp: ['TrackingHttp'],
+            captcha: ['CaptchaHelper'],
             browser: [], // TODO
             threading: [], // TODO
             utils: [] // TODO
